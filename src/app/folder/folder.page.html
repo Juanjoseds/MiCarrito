@@ -14,8 +14,13 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div *ngIf="folder == 'Inicio'">
+    <app-home></app-home>
   </div>
+
+  <div *ngIf="folder == 'Acceder'">
+    <app-auth></app-auth>
+  </div>
+
+
 </ion-content>

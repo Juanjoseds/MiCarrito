@@ -5,6 +5,14 @@
         <ion-list id="inbox-list">
           <ion-list-header>Mi carrito</ion-list-header>
           <ion-note>hi@ionicframework.com</ion-note>
+          <ion-menu-toggle auto-hide="false">
+            <ion-chip [routerLink]="[authPage[0].url]">
+              <ion-avatar>
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar>
+              <ion-label>Entra o registrate</ion-label>
+            </ion-chip>
+          </ion-menu-toggle>
 
           <!-- Recorre el array de appPages para mostrarlas -->
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">

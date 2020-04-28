@@ -11,25 +11,32 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
-  public appPages = [
+  public authPage = [
     {
+      title: 'Entrar',
+      url: 'auth'
+    }
+  ];
+
+  public appPages = [
+      {
       title: 'Inicio',
-      url: '/folder/Inicio',
+      url: 'Inicio',
       icon: 'home'
     },
     {
-      title: 'Outbox',
-      url: '/folder/Outbox',
-      icon: 'paper-plane'
+      title: 'Guardados',
+      url: 'productos',
+      icon: 'save'
     },
     {
       title: 'Favorites',
-      url: '/folder/Favorites',
+      url: 'Favorites',
       icon: 'heart'
     },
     {
       title: 'Archived',
-      url: '/folder/Archived',
+      url: 'Archived',
       icon: 'archive'
     },
     {

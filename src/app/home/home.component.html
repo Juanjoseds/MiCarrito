@@ -1,20 +1,14 @@
+<ion-searchbar animated></ion-searchbar>
 
-  <div class="divsearchbar">
-    <input type="text" class="form-control p-3" id="usr">
-  </div>
-
-
-  <!-- *ngFor="let item of this.cart" -->
   <div *ngIf="this.fbs.email === undefined">
     <p>¡No estás conectado!</p>
   </div>
 
   <div *ngIf="this.fbs.email !== undefined">
-    <p>¡Conectado to chuleta!</p>
     <ion-list *ngFor="let item of this.fbs.userCart">
       <ion-item>
-        <ion-label>{{item}}</ion-label>
         <ion-checkbox slot="start"></ion-checkbox>
+        <ion-label>{{item}}</ion-label>
       </ion-item>
     </ion-list>
   </div>

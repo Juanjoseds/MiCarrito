@@ -11,7 +11,6 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 
 export class firebaseService implements OnInit{
 
-    private logoutFlag:boolean;
     public login; public email; public userCart;
     private userDoc$ : Observable<any>;
 

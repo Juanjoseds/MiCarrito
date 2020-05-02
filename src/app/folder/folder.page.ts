@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {firebaseService} from '../services/firebase.service';
 
 @Component({
   selector: 'app-folder',
@@ -10,7 +9,7 @@ import {firebaseService} from '../services/firebase.service';
 export class FolderPage implements OnInit {
   public folder: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private fbs: firebaseService) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');

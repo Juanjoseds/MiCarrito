@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {firebaseService} from '../services/firebase.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -8,7 +9,7 @@ import {firebaseService} from '../services/firebase.service';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private fbs: firebaseService) { }
+  constructor(private fbs: firebaseService, private router: Router) { }
 
   ngOnInit() {}
 
@@ -19,6 +20,7 @@ export class AuthComponent implements OnInit {
 
     if(email !== '' || password !== ''){
       this.fbs.loginEmailAndPassword(email, password);
+      this.router.navigateByUrl('/Inicio');
     }
   }
 

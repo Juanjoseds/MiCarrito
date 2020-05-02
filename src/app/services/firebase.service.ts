@@ -1,26 +1,44 @@
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFireDatabase} from '@angular/fire/database';
 import {fromPromise} from 'rxjs/internal-compatibility';
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {auth} from 'firebase';
-import * as firebase from 'firebase';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class firebaseService {
-    private login; private email;
-    private cart;
+export class firebaseService implements OnInit{
 
-    constructor(private fdb: AngularFireDatabase, private fauth: AngularFireAuth) {
+    private logoutFlag:boolean;
+    public login; public email; public userCart;
+    private userDoc$ : Observable<any>;
+
+
+    constructor(private fauth: AngularFireAuth, private afs: AngularFirestore) {
+        this.loginUser();
+    }
+
+    ngOnInit() {}
+
+
+    /*
+        Genera un observable con el login del usuario
+     */
+    public loginUser(){
         this.login = this.fauth.authState.subscribe(
-            (data) => {console.log('logged in:', data); this.getSession();},
-            (error) => console.log('YEKA', error),
+            (data) => {
+                if(data !== null){
+                    console.log('logged in:', data);
+                    this.email = data.email;
+                    this.userDoc$ = this.getUserDoc();
+                    this.userDoc$.subscribe((doc) => {this.userCart = doc.cart; console.log('UserCart', this.userCart)});
+                }
+            },
+            (error) => console.log('error', error),
             () => console.log('auth complete')
         );
-
     }
 
     /*
@@ -34,39 +52,20 @@ export class firebaseService {
         Desconecta al usuario actual
      */
     public logout(){
+        this.login.complete();
+        this.logoutFlag = true;
         auth().signOut().then(function() {
             console.log('Logout sucessfully');
         }).catch(function(error) {
             console.log('Error in logout');
         });
+        this.email = undefined;
     }
 
     /*
-        Obtiene los items del usuario de Firebase
+        Obtiene los el documento del usuario
      */
-    async getFireItems(email){
-        const snapshot = await firebase.firestore().collection('User').doc(email).get().then(function(doc){
-            if(doc.exists){
-                console.log(doc.data());
-            }else{
-                console.log('[ERROR] ¡No existe el documento!');
-            }
-        });
-    }
-
-    async getSession(){
-        let email = undefined;
-        await firebase.auth().onAuthStateChanged(function (user) {
-            if(user){
-                email = user.email;
-            }else{
-                console.log('No hay una sesión activa');
-                email = undefined;
-            }
-        })
-        if(email !== undefined){
-            this.email = email;
-            await this.getFireItems(this.email);
-        }
-    }
+     getUserDoc(): Observable<any> {
+        return this.afs.doc('User/' + auth().currentUser.email).valueChanges();
+     }
 }

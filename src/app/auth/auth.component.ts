@@ -9,14 +9,14 @@ import {Router} from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private fbs: firebaseService, private router: Router) { }
+  constructor(public fbs: firebaseService, private router: Router) { }
 
   ngOnInit() {}
 
 
-  private checkAuth(){
-    let email = (document.getElementById('email') as HTMLInputElement).value.trim();
-    let password = (document.getElementById('password') as HTMLInputElement).value.trim();
+  public checkAuth(){
+    const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+    const password = (document.getElementById('password') as HTMLInputElement).value.trim();
 
     if(email !== '' || password !== ''){
       this.fbs.loginEmailAndPassword(email, password);

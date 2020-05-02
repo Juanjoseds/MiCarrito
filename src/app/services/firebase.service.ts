@@ -29,6 +29,7 @@ export class firebaseService implements OnInit{
     public loginUser(){
         this.login = this.fauth.authState.subscribe(
             (data) => {
+                // No realizamos acciones si no hay usuario conectado (pero seguimos escuchando por si se loguea)
                 if(data !== null){
                     console.log('logged in:', data);
                     this.email = data.email;
@@ -52,8 +53,6 @@ export class firebaseService implements OnInit{
         Desconecta al usuario actual
      */
     public logout(){
-        this.login.complete();
-        this.logoutFlag = true;
         auth().signOut().then(function() {
             console.log('Logout sucessfully');
         }).catch(function(error) {

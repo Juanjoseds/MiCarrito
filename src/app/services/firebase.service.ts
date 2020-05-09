@@ -2,10 +2,11 @@ import {Observable} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {Injectable, OnInit} from '@angular/core';
-import {auth, firestore} from 'firebase';
+import {auth} from 'firebase';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
-import * as firebase from 'firebase';
+import {map} from 'rxjs/operators';
+import {AlertService} from './alert.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,10 @@ export class firebaseService implements OnInit{
     private userDoc$ : Observable<any>;
 
 
-    constructor(private fauth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+    constructor(private fauth: AngularFireAuth,
+                private afs: AngularFirestore,
+                private router: Router,
+                private as: AlertService) {
         this.loginUser();
     }
 
@@ -34,8 +38,8 @@ export class firebaseService implements OnInit{
                 if(data !== null){
                     console.log('logged in:', data);
                     this.email = data.email;
-                    this.userDoc$ = this.getUserDoc();
-                    this.userDoc$.subscribe((doc) => {this.userItems = doc.items; console.log(this.userItems); this.getArrays(); });
+                    this.userDoc$ = this.getUserItems();
+                    this.userDoc$.subscribe((doc) => {this.userItems = doc; console.log(this.userItems); this.getArrays();});
 
                 }
             },
@@ -70,17 +74,19 @@ export class firebaseService implements OnInit{
     }
 
     /**
-     * Obtiene un observable con el documento del usuario
+     * Obtiene un observable con la colección de items del usuario
      */
-     getUserDoc(): Observable<any> {
-        return this.afs.doc('User/' + auth().currentUser.email).valueChanges();
-     }
-
-    /**
-     * Devuelve la ruta de firebase del usuario
-     */
-    getUserData(){
-         return this.afs.collection('User').doc(auth().currentUser.email);
+     getUserItems(): Observable<any> {
+         // auth().currentUser.email
+        return this.afs.collection('User/'+auth().currentUser.email+'/items').snapshotChanges()
+            .pipe(
+                map(actions =>
+                actions.map(a => {
+                    const data = a.payload.doc.data() as any;
+                    const id = a.payload.doc.id;
+                    return {id, ...data};
+                }))
+            )
      }
 
     /**
@@ -91,7 +97,7 @@ export class firebaseService implements OnInit{
          // Controlamos si aún no existe el array cart de firebase
          if(this.userItems !== undefined){
              this.userItems.forEach(element => {
-                 if(element.cart === true){this.userCart.push(element);}
+                 this.userCart.push(element[element.id]);
              })
          }
     }
@@ -101,31 +107,36 @@ export class firebaseService implements OnInit{
      * @param item - Array con toda la información de un producto.
      */
     onChecked(item){
-        // return this.afs.doc('User/' + auth().currentUser.email).update('cart')
+        const name = item.name + '.bought';
+        this.afs.doc('User/'+auth().currentUser.email+'/items/' + item.name).update({
+            [name]: !item.bought
+        })
+        console.log(item.name +' Bought', !item.bought);
     }
 
 
     /**
      * Crea un nuevo array en firebase con el nuevo producto
-     * @param productName - Texto que representa el nombre del nuevo producto
+     * @param productName - String que representa el nombre del nuevo producto
      */
-    public createItem(productName){
+    public createItem(productName: string){
         const newProduct = {name: productName, price: 0, cart: true, supermarket: 'Ninguno', bought: false};
 
-        // Une el array existente en firebase con newProduct
-        this.getUserData().update({
-            items: firestore.FieldValue.arrayUnion(newProduct)
+        this.afs.collection('User/carrito@carrito.com/items').doc(productName).set({
+           [productName]: newProduct
         })
     }
 
     /**
      * Borra el array correspondiente en firebase
-     * @param item - Array a eliminar
+     * @param productName - Nombre del producto a eliminar
      */
-    public destroyItem(item){
-        const destroyProduct = {name: item.name, price: item.price, cart: item.cart, supermarket: item.supermarket, bought: item.bought};
-        this.getUserData().update({
-            items: firestore.FieldValue.arrayRemove(destroyProduct)
-        })
+    public async destroyItem(productName: string) {
+        const confirm = await this.as.alertOkCancel('¿Desea borrar ' + productName + '?');
+        // Si el usuario hace click en borrar
+        if(confirm) {
+            await this.afs.collection('User/carrito@carrito.com/items').doc(productName).delete();
+
+        }
     }
 }

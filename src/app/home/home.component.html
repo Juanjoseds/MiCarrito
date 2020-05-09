@@ -5,7 +5,8 @@
 
 <div *ngIf="this.fbs.email !== undefined">
   <div class="addBar">
-    <input type="text" class="form-control" placeholder="Añadir a la lista" (keydown.enter)="this.fbs.createItem($event.target.value)">
+    <label for="search" class="d-none"></label>
+      <input type="text" id="search" class="form-control" placeholder="Añadir a la lista" (keydown.enter)="this.fbs.createItem($event.target.value)">
   </div>
   <p class="tuCesta">Tu cesta</p>
 
@@ -22,6 +23,9 @@
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="fbs.destroyItem(item.name); this.closeSliding(slidingItem)">
           Borrar
+        </ion-item-option>
+        <ion-item-option color="secondary" (click)="this.closeSliding(slidingItem)">
+          Editar
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>

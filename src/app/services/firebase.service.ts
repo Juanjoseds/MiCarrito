@@ -12,7 +12,7 @@ import {AlertService} from './alert.service';
     providedIn: 'root'
 })
 
-export class firebaseService implements OnInit{
+export class FirebaseService implements OnInit{
 
     public login; public email; public userItems; public userCart = [];
     private userDoc$ : Observable<any>;
@@ -56,20 +56,19 @@ export class firebaseService implements OnInit{
     public loginEmailAndPassword(email, password):Observable <any>{
         return fromPromise(this.fauth.signInWithEmailAndPassword(email, password).then(() => {
             this.router.navigateByUrl('/Inicio');
-        }).catch(function (error) {
-            console.log('Auth Error', error);
-        }));
+        }).catch((error) =>
+            console.log('Auth Error', error)
+        ));
     }
 
     /**
      * Desconecta al usuario actual
      */
     public logout(){
-        auth().signOut().then(function() {
-            console.log('Logout sucessfully');
-        }).catch(function(error) {
-            console.log('Error in logout', error);
-        });
+        auth().signOut().then(() =>
+            console.log('Logout sucessfully')
+        ).catch((error) =>
+            console.log('Error in logout', error));
         this.email = undefined;
     }
 
@@ -106,12 +105,12 @@ export class firebaseService implements OnInit{
      * Al hacer click en el checkbox se cambia la variable @cart de firebase
      * @param item - Array con toda la información de un producto.
      */
-    onChecked(item){
+    async onChecked(item) {
         const name = item.name + '.bought';
-        this.afs.doc('User/'+auth().currentUser.email+'/items/' + item.name).update({
+        await this.afs.doc('User/' + auth().currentUser.email + '/items/' + item.name).update({
             [name]: !item.bought
         })
-        console.log(item.name +' Bought', !item.bought);
+        console.log(item.name + ' Bought', !item.bought);
     }
 
 
@@ -119,11 +118,11 @@ export class firebaseService implements OnInit{
      * Crea un nuevo array en firebase con el nuevo producto
      * @param productName - String que representa el nombre del nuevo producto
      */
-    public createItem(productName: string){
-        const newProduct = {name: productName, price: 0, cart: true, supermarket: 'Ninguno', bought: false};
+    public async createItem(productName: string) {
+        const newProduct = {name: productName, price: '0', cart: true, supermarket: 'Ninguno', bought: false};
 
-        this.afs.collection('User/carrito@carrito.com/items').doc(productName).set({
-           [productName]: newProduct
+        await this.afs.collection('User/carrito@carrito.com/items').doc(productName).set({
+            [productName]: newProduct
         })
     }
 

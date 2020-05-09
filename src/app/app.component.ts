@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import {firebaseService} from './services/firebase.service';
+import {FirebaseService} from './services/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -57,7 +56,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public fbs: firebaseService
+    public fbs: FirebaseService
   ) {
     this.initializeApp();
   }

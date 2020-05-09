@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AlertController} from '@ionic/angular';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 
 export class AlertService {
 

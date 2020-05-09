@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {firebaseService} from '../services/firebase.service';
-import {Router} from '@angular/router';
+import {FirebaseService} from '../services/firebase.service';
 
 @Component({
   selector: 'app-auth',
@@ -9,7 +8,7 @@ import {Router} from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(public fbs: firebaseService) { }
+  constructor(public fbs: FirebaseService) { }
 
   ngOnInit() {}
 

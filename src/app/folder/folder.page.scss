@@ -26,3 +26,15 @@ ion-menu-button {
 #container a {
   text-decoration: none;
 }
+
+.footer{
+  height: 2.5em;
+
+  ion-toolbar{
+    --background: rgb(253, 253, 253);
+
+    div > p{
+      padding: 0.5em;
+    }
+  }
+}

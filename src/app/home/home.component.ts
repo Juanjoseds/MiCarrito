@@ -16,4 +16,5 @@ export class HomeComponent implements OnInit {
   public closeSliding(itemSliding){
     itemSliding.close();
   }
+
 }

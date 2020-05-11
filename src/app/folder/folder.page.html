@@ -21,6 +21,17 @@
   <div *ngIf="folder == 'Acceder'">
     <app-auth></app-auth>
   </div>
-
-
 </ion-content>
+
+<div *ngIf="folder == 'Inicio' && this.fbs.email !== undefined">
+
+  <ion-footer class="footer">
+    <ion-toolbar>
+      <div>
+        <p>Total: {{this.fbs.cartPrice}}</p>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+
+</div>
+

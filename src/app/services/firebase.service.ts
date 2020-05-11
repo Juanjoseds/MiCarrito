@@ -14,7 +14,7 @@ import {AlertService} from './alert.service';
 
 export class FirebaseService implements OnInit{
 
-    public login; public email; public userItems; public userCart = [];
+    public login; public email; public userItems; public userCart = []; public cartPrice;
     private userDoc$ : Observable<any>;
 
 
@@ -39,7 +39,7 @@ export class FirebaseService implements OnInit{
                     console.log('logged in:', data);
                     this.email = data.email;
                     this.userDoc$ = this.getUserItems();
-                    this.userDoc$.subscribe((doc) => {this.userItems = doc; console.log(this.userItems); this.getArrays();});
+                    this.userDoc$.subscribe((doc) => {this.userItems = doc; console.log('UserItems',this.userItems); this.getArrays();});
 
                 }
             },
@@ -76,7 +76,6 @@ export class FirebaseService implements OnInit{
      * Obtiene un observable con la colección de items del usuario
      */
      getUserItems(): Observable<any> {
-         // auth().currentUser.email
         return this.afs.collection('User/'+auth().currentUser.email+'/items').snapshotChanges()
             .pipe(
                 map(actions =>
@@ -89,40 +88,78 @@ export class FirebaseService implements OnInit{
      }
 
     /**
-     * Obtenemos los datos de firebase en forma de Array para iterar facilmente
+     * Se extrae en forma de array los items del usuario sumando el precio total
      */
     getArrays(){
          this.userCart = [];
+         this.cartPrice = 0.0;
          // Controlamos si aún no existe el array cart de firebase
          if(this.userItems !== undefined){
              this.userItems.forEach(element => {
-                 this.userCart.push(element[element.id]);
+                 if(element[element.id].cart === true){
+                     this.userCart.push(element[element.id]);
+                     this.cartPrice += parseFloat((element[element.id].price));
+                 }
              })
          }
+         console.log('UserCart',this.userCart);
     }
 
     /**
      * Al hacer click en el checkbox se cambia la variable @cart de firebase
      * @param item - Array con toda la información de un producto.
      */
-    async onChecked(item) {
-        const name = item.name + '.bought';
+    public async onChecked(item) {
+        const namebought = item.name + '.bought';
         await this.afs.doc('User/' + auth().currentUser.email + '/items/' + item.name).update({
-            [name]: !item.bought
+            [namebought]: !item.bought
         })
         console.log(item.name + ' Bought', !item.bought);
     }
 
+    /**
+     * Invocación para eliminar del carrito un item
+     * @param item - Producto
+     */
+    public async onCart(item) {
+        this.userCart.forEach((element) => {
+            if(element.name === item.name){
+                this.changeCart(item.name);
+            }
+        });
+    }
 
     /**
-     * Crea un nuevo array en firebase con el nuevo producto
+     * Cambia la variable cart de firebase del item
+     * @param name - Nombre del item a cambiar
+     */
+    public async changeCart(name){
+        this.userItems.forEach((element) => {
+            if(element[element.id].name === name){
+                const namecart = name + '.cart';
+                this.afs.doc('User/' + auth().currentUser.email + '/items/' + name).update({
+                    [namecart]: !element[element.id].cart
+                });
+            }
+        })
+    }
+
+
+    /**
+     * Crea un nuevo producto en firebase tras comprobar si existe
      * @param productName - String que representa el nombre del nuevo producto
      */
     public async createItem(productName: string) {
-        const newProduct = {name: productName, price: '0', cart: true, supermarket: 'Ninguno', bought: false};
+        this.userCart.forEach((element) => {
+            if(element.name === productName){
+                this.changeCart(productName)
+            }else{
+                const newProduct = {name: productName, price: '0', cart: true, supermarket: 'Ninguno', bought: false};
 
-        await this.afs.collection('User/carrito@carrito.com/items').doc(productName).set({
-            [productName]: newProduct
+                this.afs.collection('User/carrito@carrito.com/items').doc(productName).set({
+                    [productName]: newProduct
+                });
+            }
         })
     }
 

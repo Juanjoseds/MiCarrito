@@ -1,17 +1,38 @@
 # Mi carrito
 
-Esta aplicación consiste en una simple lista donde el usuario puede añadir productos para comprarlos.
-Al añadir un producto a la lista, el usuario puede especificar precio y supermercado de preferencia, que
-se almacenará en Firebase. 
+*Mi carrito es una aplicación móvil versatil, donde el usuario puede añadir a una lista de la compra productos de cualquier ámbito (alimentación, higiene, electrodomésticos, ...), donde podrá consultar posteriormente dichos productos para su compra.*
 
-Posteriormente, se pueden añadir los productos ya cargados en FireBase, para que el usuario no tenga que volver
-a escribir el supermercado ni precio de preferencia para sus productos favoritos.
+## Comenzando 🚀
 
-## Casos de uso
+*Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.*
 
-El usuario deberá registrarse para tener acceso a las funciones de la nube. En caso contrario, no podrá realizar 
-las funciones de hosting de la aplicación, haciendo que todo los cambios sean locales.
+### Pre-requisitos 📝
 
-## Implementación
+Para que todo funcione correctamente deberás comprobar que ```node.js``` y ```git``` está en su versión mas reciente:
 
-*Mi carrito* está elaborado con Angular e Ionic. 
+En **PowerShell** en modo administrador ejecute:
+
+```powershell
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+npm install -g npm-windows-upgrade
+npm-windows-upgrade
+```
+
+En la **consola** de windows ejecute:
+
+```powershell
+git update-git-for-windows
+```
+
+Con esto tendremos las últimas versiones de node.js y git. Si no tiene instalado ```angular``` e ```ionic``` deberá ejecutar los siguientes comandos:
+
+```terminal
+npm install -g @angular/cli
+npm install -g @ionic/cli native-run cordova-res
+```
+
+Por favor consulte [Firebase](#Firebase) para replicar el servidor.
+
+### Firebase
+
+Próximamente...

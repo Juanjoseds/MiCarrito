@@ -21,6 +21,10 @@
   <div *ngIf="folder == 'Acceder'">
     <app-auth></app-auth>
   </div>
+
+  <div *ngIf="folder == 'Regístrate' && this.fbs.email === undefined">
+    <app-register></app-register>
+  </div>
 </ion-content>
 
 <div *ngIf="folder == 'Inicio' && this.fbs.email !== undefined">

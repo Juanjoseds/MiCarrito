@@ -7,6 +7,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {AlertService} from './alert.service';
+import * as firebase from 'firebase';
 
 @Injectable({
     providedIn: 'root'
@@ -164,7 +165,7 @@ export class FirebaseService implements OnInit{
     }
 
     /**
-     * Borra el array correspondiente en firebase
+     * Borra el array correspondiente en firebase mostrando un mensaje de confirmación
      * @param productName - Nombre del producto a eliminar
      */
     public async destroyItem(productName: string) {
@@ -172,7 +173,27 @@ export class FirebaseService implements OnInit{
         // Si el usuario hace click en borrar
         if(confirm) {
             await this.afs.collection('User/carrito@carrito.com/items').doc(productName).delete();
-
         }
+    }
+
+    public createUser(email:string, password:string){
+        // console.log('Creando con:' + email + ' ' + password);
+        this.afs.collection('User').doc(email).ref.get().then((doc) => {
+            if(doc.exists){
+                console.log('¡El usuario ya existe!');
+            }else{
+                this.afs.collection('User').doc(email).set({}).then(() => {
+                    const newProduct = {name: '¡Tu primer producto!', price: '0', cart: true, supermarket: 'Ninguno', bought: false};
+                    this.afs.collection('User').doc(email).collection('items').doc(newProduct.name).set({
+                        [newProduct.name]: newProduct
+                    })
+
+                    firebase.auth().createUserWithEmailAndPassword(email,password).catch(function (error) {
+                        console.log('Error', error);
+                    })
+                });
+                this.router.navigateByUrl('/Inicio');
+            }
+        })
     }
 }

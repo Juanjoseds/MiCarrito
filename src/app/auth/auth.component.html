@@ -19,7 +19,6 @@
     <ion-button color="light" expand="block" (click)="this.fbs.logout()">Accede con Google
         <ion-icon slot="start" name="logo-google"></ion-icon>
     </ion-button>
-    <p class="text-center">Si no tienes cuenta, <a href="">regístrate</a>.</p>
+    <p class="text-center">Si no tienes cuenta, <ion-label [routerLink]="['/register']">regístrate</ion-label></p>
 
 </div>
-

@@ -9,6 +9,7 @@ import { FolderPageRoutingModule } from './folder-routing.module';
 import { FolderPage } from './folder.page';
 import {HomeComponent} from '../home/home.component';
 import {AuthComponent} from '../auth/auth.component';
+import {RegisterComponent} from '../register/register.component';
 
 
 @NgModule({
@@ -18,6 +19,6 @@ import {AuthComponent} from '../auth/auth.component';
     IonicModule,
     FolderPageRoutingModule,
   ],
-  declarations: [FolderPage, HomeComponent, AuthComponent]
+    declarations: [FolderPage, HomeComponent, AuthComponent, RegisterComponent]
 })
 export class FolderPageModule {}

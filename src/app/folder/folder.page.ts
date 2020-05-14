@@ -17,6 +17,9 @@ export class FolderPage implements OnInit {
     if(this.folder === 'auth'){
       this.folder = 'Acceder';
     }
+    if(this.folder === 'register'){
+      this.folder = 'Regístrate';
+    }
   }
 
 }

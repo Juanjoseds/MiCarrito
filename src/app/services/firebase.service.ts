@@ -40,8 +40,11 @@ export class FirebaseService implements OnInit{
                     console.log('logged in:', data);
                     this.email = data.email;
                     this.userDoc$ = this.getUserItems();
-                    this.userDoc$.subscribe((doc) => {this.userItems = doc; console.log('UserItems:Observable',this.userItems); this.getArrays();});
-
+                    this.userDoc$.subscribe((doc) => {
+                        this.userItems = doc;
+                        console.log('UserItems:Observable',this.userItems);
+                        this.getArrays();
+                    });
                 }
             },
             (error) => console.log('error', error),
@@ -193,7 +196,7 @@ export class FirebaseService implements OnInit{
                         [newProduct.name]: newProduct
                     })
 
-                    firebase.auth().createUserWithEmailAndPassword(email,password).catch(function (error) {
+                    firebase.auth().createUserWithEmailAndPassword(email,password).catch((error) => {
                         console.log('Error', error);
                     })
                 });

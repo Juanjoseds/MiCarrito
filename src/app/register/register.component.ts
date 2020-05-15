@@ -27,6 +27,9 @@ export class RegisterComponent implements OnInit {
       }
   }
 
+  /**
+   * Comprobaciones de seguridad antes de habilitar el botón de registro
+   */
   private enableButton(){
     const email = (document.getElementById('email') as HTMLInputElement).value.trim();
     const password1 = (document.getElementById('password1') as HTMLInputElement).value.trim();

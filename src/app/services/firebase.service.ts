@@ -40,7 +40,7 @@ export class FirebaseService implements OnInit{
                     console.log('logged in:', data);
                     this.email = data.email;
                     this.userDoc$ = this.getUserItems();
-                    this.userDoc$.subscribe((doc) => {this.userItems = doc; console.log('UserItems',this.userItems); this.getArrays();});
+                    this.userDoc$.subscribe((doc) => {this.userItems = doc; console.log('UserItems:Observable',this.userItems); this.getArrays();});
 
                 }
             },
@@ -103,7 +103,7 @@ export class FirebaseService implements OnInit{
                  }
              })
          }
-         console.log('UserCart',this.userCart);
+         console.log('UserCart:Array',this.userCart);
     }
 
     /**
@@ -116,18 +116,6 @@ export class FirebaseService implements OnInit{
             [namebought]: !item.bought
         })
         console.log(item.name + ' Bought', !item.bought);
-    }
-
-    /**
-     * Invocación para eliminar del carrito un item
-     * @param item - Producto
-     */
-    public async onCart(item) {
-        this.userCart.forEach((element) => {
-            if(element.name === item.name){
-                this.changeCart(item.name);
-            }
-        });
     }
 
     /**
@@ -145,19 +133,31 @@ export class FirebaseService implements OnInit{
         })
     }
 
-
     /**
      * Crea un nuevo producto en firebase tras comprobar si existe
      * @param productName - String que representa el nombre del nuevo producto
      */
     public async createItem(productName: string) {
-        this.userCart.forEach((element) => {
-            if(element.name === productName){
-                this.changeCart(productName)
+        await this.afs.collection('User').doc(auth().currentUser.email).collection('items').doc(productName).ref.get().then((doc) => {
+            if(doc.exists){
+                // Si existe en firebase comprobamos si ya está añadido
+                if(this.userCart.length === 0){
+                    this.changeCart(productName);
+                }else{
+                    // every deja de recorrer cuando se devuelve false
+                    this.userCart.every((element, index) => {
+                        if(element.name === productName){
+                            return false;
+                        }else if (element.name !== productName && index === this.userCart.length-1){
+                            this.changeCart(productName);
+                        }
+                    });
+                }
             }else{
+                // Si no existe en firebase lo añadimos
                 const newProduct = {name: productName, price: '0', cart: true, supermarket: 'Ninguno', bought: false};
 
-                this.afs.collection('User/carrito@carrito.com/items').doc(productName).set({
+                this.afs.collection('User').doc(auth().currentUser.email).collection('items').doc(productName).set({
                     [productName]: newProduct
                 });
             }
@@ -176,6 +176,11 @@ export class FirebaseService implements OnInit{
         }
     }
 
+    /**
+     * Crea un usuario en firebase
+     * @param email - Correo electrónico
+     * @param password - Contraseña
+     */
     public createUser(email:string, password:string){
         // console.log('Creando con:' + email + ' ' + password);
         this.afs.collection('User').doc(email).ref.get().then((doc) => {

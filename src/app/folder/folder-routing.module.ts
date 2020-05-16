@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FolderPage } from './folder.page';
 import {RegisterComponent} from '../register/register.component';
+import {EditComponent} from '../edit/edit.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: '/register',
     component: RegisterComponent
+  },
+  {
+    path: '/edit/:id',
+    component: EditComponent
   }
 ];
 

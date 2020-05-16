@@ -20,6 +20,9 @@ export class FolderPage implements OnInit {
     if(this.folder === 'register'){
       this.folder = 'Regístrate';
     }
+    if(this.folder === 'edit'){
+      this.folder = 'Editar';
+    }
   }
 
 }

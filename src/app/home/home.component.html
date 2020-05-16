@@ -3,7 +3,18 @@
   <p>Entra con tu cuenta para comenzar a organizar tu compra</p>
 </div>
 
-<div *ngIf="this.fbs.email !== undefined">
+<div *ngIf="this.fbs.email !== undefined && this.fbs.userCart.length == 0">
+  <div class="addBar">
+    <label for="search1" class="d-none"></label>
+    <input type="text" id="search1" class="form-control" placeholder="Añadir a la lista" (keydown.enter)="this.fbs.createItem($event.target.value)">
+  </div>
+  <div class="nologin">
+    <ion-icon name="rocket-outline"></ion-icon>
+    <p>Escribe un producto para empezar</p>
+  </div>
+</div>
+
+<div *ngIf="this.fbs.email !== undefined && this.fbs.userCart.length > 0">
   <div class="addBar">
     <label for="search" class="d-none"></label>
       <input type="text" id="search" class="form-control" placeholder="Añadir a la lista" (keydown.enter)="this.fbs.createItem($event.target.value)">
@@ -25,7 +36,7 @@
           <ion-item-option color="danger" (click)="fbs.changeCart(item.name); this.closeSliding(slidingItem)">
             Borrar
           </ion-item-option>
-          <ion-item-option color="secondary" (click)="this.closeSliding(slidingItem)">
+          <ion-item-option color="secondary" (click)="goToEdit(item.name); this.closeSliding(slidingItem)">
             Editar
           </ion-item-option>
         </ion-item-options>
@@ -33,7 +44,4 @@
 
     </ion-list>
   </div>
-
 </div>
-
-

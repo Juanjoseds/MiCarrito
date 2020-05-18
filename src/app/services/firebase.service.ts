@@ -128,8 +128,8 @@ export class FirebaseService implements OnInit{
     public async changeCart(name){
         this.userItems.forEach((element) => {
             if(element[element.id].name === name){
-                const namecart = name + '.cart';
-                this.afs.doc('User/' + auth().currentUser.email + '/items/' + name).update({
+                const namecart = element.id + '.cart';
+                this.afs.doc('User/' + auth().currentUser.email + '/items/' + element.id).update({
                     [namecart]: !element[element.id].cart
                 });
             }
@@ -175,7 +175,7 @@ export class FirebaseService implements OnInit{
         const confirm = await this.as.alertOkCancel('¿Desea borrar ' + productName + '?');
         // Si el usuario hace click en borrar
         if(confirm) {
-            await this.afs.collection('User/carrito@carrito.com/items').doc(productName).delete();
+            await this.afs.collection('User/'+auth().currentUser.email+'/items').doc(productName).delete();
         }
     }
 
@@ -186,7 +186,7 @@ export class FirebaseService implements OnInit{
      */
     public createUser(email:string, password:string){
         // console.log('Creando con:' + email + ' ' + password);
-        this.afs.collection('User').doc(email).ref.get().then((doc) => {
+        this.afs.collection('User').doc(email).ref.get().then(async (doc) => {
             if(doc.exists){
                 console.log('¡El usuario ya existe!');
             }else{
@@ -200,8 +200,28 @@ export class FirebaseService implements OnInit{
                         console.log('Error', error);
                     })
                 });
-                this.router.navigateByUrl('/Inicio');
+                await this.router.navigateByUrl('/Inicio');
             }
         })
+    }
+
+    /**
+     * Actualiza el item con los nuevos datos en firebase
+     * @param oldname - Nombre del producto en caso de que se haya cambiado, en caso contrario, el actual
+     * @param product - Mapa del producto con los datos a actualizar
+     */
+    public async updateProduct(oldname, product) {
+        if(oldname !== product.name){
+            await this.afs.collection('User/'+auth().currentUser.email+'/items').doc(oldname).delete().then(() => {
+                this.afs.collection('User').doc(auth().currentUser.email).collection('items').doc(product.name).set({
+                    [product.name]: product
+                });
+            });
+        }else{
+            console.log(oldname + ' ' + product.name);
+            await this.afs.doc('User/' + auth().currentUser.email + '/items/' + product.name).update({
+                [product.name]: product
+            });
+        }
     }
 }

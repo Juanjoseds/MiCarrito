@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   /**
    * Registra al usuario en la base de datos con sus credenciales tras comprobar si existe
    */
-  private register(){
+  public register(){
     const email = (document.getElementById('email') as HTMLInputElement).value.trim();
     const password1 = (document.getElementById('password1') as HTMLInputElement).value.trim();
     const password2 = (document.getElementById('password2') as HTMLInputElement).value.trim();
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
   /**
    * Comprobaciones de seguridad antes de habilitar el botón de registro
    */
-  private enableButton(){
+  public enableButton(){
     const email = (document.getElementById('email') as HTMLInputElement).value.trim();
     const password1 = (document.getElementById('password1') as HTMLInputElement).value.trim();
     const password2 = (document.getElementById('password2') as HTMLInputElement).value.trim();

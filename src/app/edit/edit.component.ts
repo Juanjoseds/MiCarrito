@@ -70,6 +70,7 @@ export class EditComponent implements OnInit {
       this.product.supermarket = supermarket;
     }
 
-    await this.fbs.updateProduct(oldName, this.product);
+    await this.fbs.updateProduct(oldName, this.product).then(() =>
+        this.router.navigateByUrl('/Inicio'));
   }
 }

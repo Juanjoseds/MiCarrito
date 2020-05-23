@@ -7,8 +7,8 @@
       </ion-card-header>
 
       <ion-card-content>
-        Supermercado: {{product.supermarket}} <br>
-        Precio: {{product.price}} €
+        {{product.supermarket}} <br>
+        {{product.price}} €
       </ion-card-content>
     </ion-card>
   </div>
@@ -17,19 +17,19 @@
     <!-- Nombre -->
     <div class="form-group">
       <label for="name">Nombre:</label>
-      <input type="text" class="form-control" id="name" placeholder="{{product.name}}">
+      <input type="text" class="form-control" id="name" placeholder="{{product.name}}" (keyup.enter)="saveProduct()">
     </div>
 
     <!-- Supermercado -->
     <div class="form-group">
       <label for="supermarket">Supermercado:</label>
-      <input type="text" class="form-control" id="supermarket" placeholder="{{product.supermarket}}">
+      <input type="text" class="form-control" id="supermarket" placeholder="{{product.supermarket}}" (keyup.enter)="saveProduct()">
     </div>
 
     <!-- Precio -->
     <div class="form-group">
       <label for="price">Precio:</label>
-      <input type="number" step="0.01" class="form-control" id="price" placeholder="{{product.price}}">
+      <input type="number" step="0.01" class="form-control" id="price" placeholder="{{product.price}}" (keyup.enter)="saveProduct()">
     </div>
 
   </div>

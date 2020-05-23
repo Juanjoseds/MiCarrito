@@ -12,13 +12,13 @@
     </div>
     <div class="form-group">
         <label for="password">Contraseña</label>
-        <input type="password" class="form-control" id="password" placeholder="Contraseña">
+        <input type="password" class="form-control" id="password" placeholder="Contraseña" (keyup.enter)="this.checkAuth()">
     </div>
 
     <ion-button class="mb-2" color="success" expand="block" (click)="this.checkAuth()">Entrar</ion-button>
     <ion-button color="light" expand="block" (click)="this.fbs.logout()">Accede con Google
         <ion-icon slot="start" name="logo-google"></ion-icon>
     </ion-button>
-    <p class="text-center">Si no tienes cuenta, <ion-label [routerLink]="['/register']">regístrate</ion-label></p>
+    <p class="text-center registrate">Si no tienes cuenta, <ion-label [routerLink]="['/register']"class="registratecolor">regístrate</ion-label></p>
 
 </div>

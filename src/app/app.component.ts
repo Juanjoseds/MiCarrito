@@ -33,37 +33,24 @@ export class AppComponent implements OnInit {
       title: 'Favorites',
       url: 'Favorites',
       icon: 'heart'
-    },
-    {
-      title: 'Archived',
-      url: 'Archived',
-      icon: 'archive'
-    },
-    {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public fbs: FirebaseService
+    public fbs: FirebaseService,
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      // Texto oscuro para fondo blanco
       this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByName('white');
       this.splashScreen.hide();
     });
   }

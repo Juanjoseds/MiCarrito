@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../services/firebase.service';
 import {NavigationExtras, Router} from '@angular/router';
+import {PopoverController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',

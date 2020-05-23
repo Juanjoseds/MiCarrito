@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireModule} from '@angular/fire';
-import {environment} from '../environments/environment';
+import {environment} from '../environments/environment.prod';
 
 
 @NgModule({

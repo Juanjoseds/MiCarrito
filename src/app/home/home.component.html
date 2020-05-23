@@ -19,9 +19,9 @@
     <label for="search" class="d-none"></label>
       <input type="text" id="search" class="form-control" placeholder="Añadir a la lista" (keydown.enter)="this.fbs.createItem($event.target.value)">
   </div>
-  <div>
-    <p class="tuCesta">Tu cesta</p>
 
+
+  <div>
     <ion-list *ngFor="let item of this.fbs.userCart">
       <ion-item-sliding #slidingItem>
 

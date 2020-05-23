@@ -5,7 +5,10 @@
         <ion-list id="inbox-list">
           <ion-list-header>Mi carrito</ion-list-header>
 
-          <ion-note *ngIf="this.fbs.email !== undefined">{{this.fbs.email}}</ion-note>
+          <div *ngIf="this.fbs.email !== undefined">
+            <ion-note class="mb-0">{{this.fbs.email}}</ion-note>
+          </div>
+
 
           <ion-menu-toggle auto-hide="false" *ngIf="this.fbs.email == undefined">
             <ion-chip [routerLink]="[authPage[0].url]">
@@ -34,6 +37,7 @@
           </ion-menu-toggle>
         </ion-list>
 
+        <!--
         <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
 
@@ -41,7 +45,8 @@
             <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
+
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

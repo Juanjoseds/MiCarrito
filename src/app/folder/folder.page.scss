@@ -34,19 +34,22 @@ ion-menu-button {
     --background: rgb(253, 253, 253);
 
     .priceFooter{
-      position: relative;
+      margin-left: 0.5em;
     }
-    .priceFooter > p{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100%;
-      margin-left: 0.2em;
-    }
+
   }
 }
 
 .settingsIcon{
   font-size: 24px;
   margin-right: 0.2em;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+
+.ellipsis{
+  background-color: white!important;
 }

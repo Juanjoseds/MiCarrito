@@ -4,6 +4,11 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
+
+    <ion-button class="ion-activatable ripple-parent ellipsis" slot="end" fill="clear" (click)="popover($event)">
+      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -35,7 +40,11 @@
 
   <ion-footer class="footer">
     <ion-toolbar>
-      <div class="priceFooter"><p><strong>Total</strong>: {{this.fbs.cartPrice.toFixed(2)}} € <ion-icon class="float-right settingsIcon" name="cog-outline" (click)="popover($event)"></ion-icon></p></div>
+      <div class="priceFooter">
+        <p>
+          <strong>Total</strong>: {{this.fbs.cartPrice.toFixed(2)}} €
+        </p>
+      </div>
 
     </ion-toolbar>
   </ion-footer>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {FirebaseService} from '../services/firebase.service';
+import {PopoverComponent} from '../popover/popover.component';
 import {PopoverController} from '@ionic/angular';
-import {HomeComponent} from '../home/home.component';
 
 @Component({
   selector: 'app-folder',
@@ -29,7 +29,7 @@ export class FolderPage implements OnInit {
 
   async popover(ev: any) {
     const popover = await this.popoverController.create({
-      component: HomeComponent,
+      component: PopoverComponent,
       event: ev,
       animated: true,
       showBackdrop: true

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PopoverController} from '@ionic/angular';
+import {FirebaseService} from '../services/firebase.service';
 
 @Component({
   selector: 'app-popover',
@@ -8,7 +8,7 @@ import {PopoverController} from '@ionic/angular';
 })
 export class PopoverComponent implements OnInit {
 
-  constructor() {}
+  constructor(public fbs: FirebaseService) {}
   ngOnInit() {}
 
 }

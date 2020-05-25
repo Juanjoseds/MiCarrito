@@ -8,12 +8,12 @@
     <ion-label>&nbsp; Ordenar alfabeticamente</ion-label>
   </ion-item>
 
-  <ion-item button>
+  <ion-item button (click)="this.fbs.checkAll()">
     <ion-icon name="color-wand-outline"></ion-icon>
     <ion-label>&nbsp; Marcar/Desmarcar todo</ion-label>
   </ion-item>
 
-  <ion-item lines="none" button>
+  <ion-item lines="none" button (click)="this.fbs.deleteAll()">
     <ion-icon name="cloud-offline-outline"></ion-icon>
     <ion-label>&nbsp; Borrar todo</ion-label>
   </ion-item>

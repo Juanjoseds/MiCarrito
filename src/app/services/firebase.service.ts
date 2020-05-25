@@ -15,7 +15,7 @@ import * as firebase from 'firebase';
 
 export class FirebaseService implements OnInit{
 
-    public login; public email; public userItems; public userCart = []; public cartPrice;
+    public login; public email; public userItems; public userCart = []; public cartPrice; private checkall;
     private userDoc$ : Observable<any>;
 
 
@@ -125,7 +125,7 @@ export class FirebaseService implements OnInit{
      * Cambia la variable cart de firebase del item
      * @param name - Nombre del item a cambiar
      */
-    public async changeCart(name){
+    public async changeCart(name:string){
         this.userItems.forEach((element) => {
             if(element[element.id].name === name){
                 const namecart = element.id + '.cart';
@@ -223,5 +223,29 @@ export class FirebaseService implements OnInit{
                 [product.name]: product
             });
         }
+    }
+
+    /**
+     * Borra todos los productos del carrito
+     */
+    public async deleteAll() {
+        for (const element of this.userCart) {
+            console.log(element);
+            await this.changeCart(element.name);
+        }
+    }
+
+    /**
+     * Marca todos los checkbox o los desmarca
+     */
+    public async checkAll(){
+        if(this.checkall === undefined){this.checkall = true;}
+        for (const element of this.userCart) {
+            console.log(element.name, element.cart);
+            if(element.bought !== this.checkall){
+                await this.onChecked(element);
+            }
+        }
+        this.checkall = !this.checkall;
     }
 }

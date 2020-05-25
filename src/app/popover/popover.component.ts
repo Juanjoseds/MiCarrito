@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../services/firebase.service';
+import {LocalstorageService} from '../services/localstorage.service';
 
 @Component({
   selector: 'app-popover',
@@ -8,7 +9,7 @@ import {FirebaseService} from '../services/firebase.service';
 })
 export class PopoverComponent implements OnInit {
 
-  constructor(public fbs: FirebaseService) {}
+  constructor(public fbs: FirebaseService, public ls: LocalstorageService) {}
   ngOnInit() {}
 
 }

@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {AlertService} from './alert.service';
 import * as firebase from 'firebase';
+import {LocalstorageService} from './localstorage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,12 +23,12 @@ export class FirebaseService implements OnInit{
     constructor(private fauth: AngularFireAuth,
                 private afs: AngularFirestore,
                 private router: Router,
-                private as: AlertService) {
+                private as: AlertService,
+                private ls: LocalstorageService) {
         this.loginUser();
     }
 
     ngOnInit() {}
-
 
     /**
      * Genera un observable con el login del usuario
@@ -43,7 +44,8 @@ export class FirebaseService implements OnInit{
                     this.userDoc$.subscribe((doc) => {
                         this.userItems = doc;
                         console.log('UserItems:Observable',this.userItems);
-                        this.getArrays();
+                        this.getArrays(); // Obtiene el array para el carrito
+                        this.ls.initializeLocalStorage(); // Inicializa las variables de ls
                     });
                 }
             },

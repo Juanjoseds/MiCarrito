@@ -1,11 +1,8 @@
 <ion-list>
-  <ion-list-header>
-    <ion-label>Ajustes</ion-label>
-  </ion-list-header>
 
-  <ion-item button>
-    <ion-icon name="easel-outline"></ion-icon>
-    <ion-label>&nbsp; Ordenar alfabeticamente</ion-label>
+  <ion-item button (click)="this.ls.order()">
+    <ion-icon name="albums-outline"></ion-icon>
+    <ion-label>&nbsp; Ordenar {{this.ls.getNextOrder()}}</ion-label>
   </ion-item>
 
   <ion-item button (click)="this.fbs.checkAll()">

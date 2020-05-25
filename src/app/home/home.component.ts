@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../services/firebase.service';
 import {NavigationExtras, Router} from '@angular/router';
-import {PopoverController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +9,7 @@ import {PopoverController} from '@ionic/angular';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public fbs: FirebaseService, private router: Router) {
-  }
+  constructor(public fbs: FirebaseService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -19,8 +17,8 @@ export class HomeComponent implements OnInit {
     itemSliding.close();
   }
 
-  public goToEdit(productName){
-    const navigationExtras: NavigationExtras = { state: {name: productName}};
-    this.router.navigate(['/edit'], navigationExtras);
+  public async goToEdit(productName) {
+    const navigationExtras: NavigationExtras = {state: {name: productName}};
+    await this.router.navigate(['/edit'], navigationExtras);
   }
 }

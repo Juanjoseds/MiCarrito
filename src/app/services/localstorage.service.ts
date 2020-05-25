@@ -25,6 +25,16 @@ export class LocalstorageService {
         }
     }
 
+    /**
+     * Devuelve el valor de order
+     */
+    public getOrder(){
+        return localStorage.getItem('order');
+    }
+
+    /**
+     * Método para estética en el popover
+     */
     public getNextOrder(){
         if(localStorage.getItem('order') === 'alfabéticamente'){
             return 'por supermercado';

@@ -20,8 +20,8 @@
       <input type="text" id="search" class="form-control" placeholder="Añadir a la lista" (keydown.enter)="this.fbs.createItem($event.target.value)">
   </div>
 
-
-  <div>
+  <!-- ORDENACIÓN ALFABETICA -->
+  <div *ngIf="this.ls.getOrder() === 'alfabéticamente'">
     <ion-list *ngFor="let item of this.fbs.userCart">
       <ion-item-sliding #slidingItem>
 
@@ -41,7 +41,65 @@
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
-
     </ion-list>
   </div>
+
+  <!-- ORDENACIÓN POR MARCADO -->
+  <div *ngIf="this.ls.getOrder() === 'comprado'">
+    <ion-list *ngFor="let item of this.fbs.comprado">
+      <ion-item-sliding #slidingItem>
+
+        <ion-item>
+          <ion-checkbox slot="start" [checked]="item.bought" (ionChange)="this.fbs.onChecked(item)"></ion-checkbox>
+          <ion-label>
+            <h1>{{item.name}}</h1>
+            <small id="emailHelp" class="form-text text-muted">{{item.supermarket}} &mdash; {{item.price}} €</small></ion-label>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="fbs.changeCart(item.name); this.closeSliding(slidingItem)">
+            Borrar
+          </ion-item-option>
+          <ion-item-option color="secondary" (click)="goToEdit(item.name); this.closeSliding(slidingItem)">
+            Editar
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+  <!-- ORDENACIÓN POR SUPERMERCADO -->
+
+  <div *ngIf="this.ls.getOrder() === 'supermercado'">
+
+    <div *ngFor="let supermarket of fbs.supermarket">
+      <ion-list-header>
+        <ion-label>{{supermarket}}</ion-label>
+      </ion-list-header>
+      <ion-list *ngFor="let item of this.fbs.userCart">
+        <div *ngIf="item.supermarket === supermarket">
+          <ion-item-sliding #slidingItem>
+
+            <ion-item>
+              <ion-checkbox slot="start" [checked]="item.bought" (ionChange)="this.fbs.onChecked(item)"></ion-checkbox>
+              <ion-label>
+                <h1>{{item.name}}</h1>
+                <small id="emailHelp" class="form-text text-muted">{{item.supermarket}} &mdash; {{item.price}} €</small></ion-label>
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="fbs.changeCart(item.name); this.closeSliding(slidingItem)">
+                Borrar
+              </ion-item-option>
+              <ion-item-option color="secondary" (click)="goToEdit(item.name); this.closeSliding(slidingItem)">
+                Editar
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      </ion-list>
+    </div>
+
+  </div>
+
 </div>

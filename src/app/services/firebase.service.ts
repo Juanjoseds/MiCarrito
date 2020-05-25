@@ -16,7 +16,9 @@ import {LocalstorageService} from './localstorage.service';
 
 export class FirebaseService implements OnInit{
 
-    public login; public email; public userItems; public userCart = []; public cartPrice; private checkall;
+    public login; public email; public userItems; public userCart = []; public cartPrice;
+    private checkall; public comprado = []; public supermarket = [];
+
     private userDoc$ : Observable<any>;
 
 
@@ -40,12 +42,15 @@ export class FirebaseService implements OnInit{
                 if(data !== null){
                     console.log('logged in:', data);
                     this.email = data.email;
+                    this.ls.initializeLocalStorage(); // Inicializa las variables de ls
                     this.userDoc$ = this.getUserItems();
+                    // Observable de los items del usuario
                     this.userDoc$.subscribe((doc) => {
                         this.userItems = doc;
                         console.log('UserItems:Observable',this.userItems);
-                        this.getArrays(); // Obtiene el array para el carrito
-                        this.ls.initializeLocalStorage(); // Inicializa las variables de ls
+                        this.getArrays(); // Obtiene el array alfabeticamente
+                        this.getCompradoArray(); // Obtiene el array ordenado por bought
+                        this.getSupermarketArray() // Obtiene el array ordenado por supermercado
                     });
                 }
             },
@@ -249,5 +254,39 @@ export class FirebaseService implements OnInit{
             }
         }
         this.checkall = !this.checkall;
+    }
+
+    public getCompradoArray(){
+        this.comprado = [];
+        // Almacena primero los false
+        this.userCart.forEach(element => {
+            if(element.bought === false){
+                this.comprado.push(element);
+            }
+        });
+
+        // Almecena segundo los true
+        this.userCart.forEach(element => {
+            if(element.bought === true){
+                this.comprado.push(element);
+            }
+        });
+    }
+
+    public getSupermarketArray(){
+        this.supermarket = [];
+
+        this.userCart.forEach(element => {
+            if(!this.supermarket.includes(element.supermarket)){
+                this.supermarket.push(element.supermarket);
+            }
+        });
+
+        if(this.supermarket.includes('Ninguno')){
+            const indice = this.supermarket.indexOf('Ninguno');
+            this.supermarket.splice(indice, 1);
+            this.supermarket.push('Ninguno');
+        }
+        console.log(this.supermarket);
     }
 }

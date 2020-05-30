@@ -1,16 +1,16 @@
 <ion-list>
 
-  <ion-item button (click)="this.ls.order()">
+  <ion-item button (click)="this.ls.order(); close();">
     <ion-icon name="albums-outline"></ion-icon>
     <ion-label>&nbsp; Ordenar {{this.ls.getNextOrder()}}</ion-label>
   </ion-item>
 
-  <ion-item button (click)="this.fbs.checkAll()">
+  <ion-item button (click)="this.fbs.checkAll(); close();">
     <ion-icon name="color-wand-outline"></ion-icon>
     <ion-label>&nbsp; Marcar/Desmarcar todo</ion-label>
   </ion-item>
 
-  <ion-item lines="none" button (click)="this.fbs.deleteAll()">
+  <ion-item lines="none" button (click)="this.fbs.deleteAll(); close();">
     <ion-icon name="cloud-offline-outline"></ion-icon>
     <ion-label>&nbsp; Borrar todo</ion-label>
   </ion-item>

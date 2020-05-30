@@ -236,9 +236,13 @@ export class FirebaseService implements OnInit{
      * Borra todos los productos del carrito
      */
     public async deleteAll() {
-        for (const element of this.userCart) {
-            console.log(element);
-            await this.changeCart(element.name);
+        const confirm = await this.as.alertOkCancel('¿Desea vaciar el carrito?');
+
+        if(confirm) {
+            for (const element of this.userCart) {
+                console.log(element);
+                await this.changeCart(element.name);
+            }
         }
     }
 
@@ -254,6 +258,7 @@ export class FirebaseService implements OnInit{
             }
         }
         this.checkall = !this.checkall;
+
     }
 
     public getCompradoArray(){

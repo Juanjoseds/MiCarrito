@@ -73,9 +73,7 @@
   <div *ngIf="this.ls.getOrder() === 'supermercado'">
 
     <div *ngFor="let supermarket of fbs.supermarket">
-      <ion-list-header>
-        <ion-label>{{supermarket}}</ion-label>
-      </ion-list-header>
+      <div class="supermarket-parent"><p class="supermarket">{{supermarket}}</p></div>
       <ion-list *ngFor="let item of this.fbs.userCart">
         <div *ngIf="item.supermarket === supermarket">
           <ion-item-sliding #slidingItem>

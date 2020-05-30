@@ -15,6 +15,9 @@ export class LocalstorageService {
         }
     }
 
+    /**
+     * Actualiza la variable order del localstorage con la ordenación actual
+     */
     public order(){
         if(localStorage.getItem('order') === 'alfabéticamente'){
             localStorage.setItem('order', 'supermercado');

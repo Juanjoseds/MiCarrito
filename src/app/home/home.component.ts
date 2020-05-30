@@ -22,4 +22,6 @@ export class HomeComponent implements OnInit {
     const navigationExtras: NavigationExtras = {state: {name: productName}};
     await this.router.navigate(['/edit'], navigationExtras);
   }
+
+
 }

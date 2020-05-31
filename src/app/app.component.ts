@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Guardados',
-      url: 'productos',
+      url: 'saved',
       icon: 'save'
     },
     {

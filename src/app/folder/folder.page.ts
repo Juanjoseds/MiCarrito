@@ -25,6 +25,9 @@ export class FolderPage implements OnInit {
     if(this.folder === 'edit'){
       this.folder = 'Editar';
     }
+    if(this.folder === 'saved'){
+      this.folder = 'Guardados';
+    }
   }
 
   async popover(ev: any) {

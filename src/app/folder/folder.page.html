@@ -34,6 +34,11 @@
   <div *ngIf="folder == 'Editar' && this.fbs.email !== undefined">
     <app-edit></app-edit>
   </div>
+
+  <div *ngIf="folder == 'Guardados' && this.fbs.email !== undefined">
+    <app-saved></app-saved>
+  </div>
+
 </ion-content>
 
 <div *ngIf="folder == 'Inicio' && this.fbs.email !== undefined && this.fbs.userCart.length !== 0">

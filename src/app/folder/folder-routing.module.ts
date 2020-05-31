@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FolderPage } from './folder.page';
 import {RegisterComponent} from '../register/register.component';
 import {EditComponent} from '../edit/edit.component';
+import {SavedComponent} from '../saved/saved.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: '/edit/:id',
     component: EditComponent
+  },
+  {
+    path: '/saved',
+    component: SavedComponent
   }
 ];
 

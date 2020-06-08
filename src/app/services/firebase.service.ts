@@ -117,7 +117,7 @@ export class FirebaseService implements OnInit{
     }
 
     /**
-     * Al hacer click en el checkbox se cambia la variable @cart de firebase
+     * Al hacer click en el checkbox se cambia la variable @bought de firebase
      * @param item - Array con toda la información de un producto.
      */
     public async onChecked(item) {
@@ -129,12 +129,17 @@ export class FirebaseService implements OnInit{
     }
 
     /**
-     * Cambia la variable cart de firebase del item
+     * Cambia la variable @cart de firebase del item
      * @param name - Nombre del item a cambiar
      */
     public async changeCart(name:string){
         this.userItems.forEach((element) => {
             if(element[element.id].name === name){
+                // Pone el campo bought a false en firebase
+                if(element[element.id].bought === true){
+                    this.onChecked(element[element.id]);
+                }
+                // Lo actualiza en firebase
                 const namecart = element.id + '.cart';
                 this.afs.doc('User/' + auth().currentUser.email + '/items/' + element.id).update({
                     [namecart]: !element[element.id].cart
@@ -148,30 +153,24 @@ export class FirebaseService implements OnInit{
      * @param productName - String que representa el nombre del nuevo producto
      */
     public async createItem(productName: string) {
-        await this.afs.collection('User').doc(auth().currentUser.email).collection('items').doc(productName).ref.get().then((doc) => {
-            if(doc.exists){
-                // Si existe en firebase comprobamos si ya está añadido
-                if(this.userCart.length === 0){
+        (document.getElementById('search') as HTMLInputElement).value = '';
+        const exists = this.userItems.some(element => {
+            // Si el producto existe en la BD solo cambia @cart
+            if(element.id === productName){
+                if(element[element.id].cart === false){
                     this.changeCart(productName);
-                }else{
-                    // every deja de recorrer cuando se devuelve false
-                    this.userCart.every((element, index) => {
-                        if(element.name === productName){
-                            return false;
-                        }else if (element.name !== productName && index === this.userCart.length-1){
-                            this.changeCart(productName);
-                        }
-                    });
                 }
-            }else{
-                // Si no existe en firebase lo añadimos
-                const newProduct = {name: productName, price: '0', cart: true, supermarket: 'Ninguno', bought: false};
-
-                this.afs.collection('User').doc(auth().currentUser.email).collection('items').doc(productName).set({
-                    [productName]: newProduct
-                });
+                return true;
             }
-        })
+        });
+
+        if(exists !== true){
+            const newProduct = {name: productName, price: '0', cart: true, supermarket: 'Ninguno', bought: false};
+
+            await this.afs.collection('User').doc(auth().currentUser.email).collection('items').doc(productName).set({
+                [productName]: newProduct
+            });
+        }
     }
 
     /**
@@ -182,7 +181,9 @@ export class FirebaseService implements OnInit{
         const confirm = await this.as.alertOkCancel('¿Desea borrar ' + productName + '?');
         // Si el usuario hace click en borrar
         if(confirm) {
-            await this.afs.collection('User/'+auth().currentUser.email+'/items').doc(productName).delete();
+            await this.afs.collection('User/'+auth().currentUser.email+'/items').doc(productName).delete().then(() => {
+                this.router.navigateByUrl('/Inicio');
+            });
         }
     }
 

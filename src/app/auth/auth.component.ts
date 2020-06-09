@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
     const email = (document.getElementById('email') as HTMLInputElement).value.trim();
     const password = (document.getElementById('password') as HTMLInputElement).value.trim();
 
-    if(email !== '' || password !== ''){
+    if(email !== '' && password !== ''){
       this.fbs.loginEmailAndPassword(email, password);
     }
   }

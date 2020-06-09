@@ -34,9 +34,9 @@
 
   </div>
 
-  <div class="pr-3">
-    <ion-list>
-      <ion-item>
+  <div>
+    <ion-list id="editList">
+      <ion-item id="editItem" lines="none">
         <ion-label>¿En el carrito?</ion-label>
         <ion-toggle [(ngModel)]="product.cart"></ion-toggle>
       </ion-item>
@@ -45,13 +45,13 @@
 
   <div class="p-2">
     <div class="mb-2">
-      <ion-button  expand="block" color="success" (click)="saveProduct()">
-        <ion-icon  slot="start" name="save-outline"></ion-icon>
+      <ion-button id="btnsave" expand="block" color="success" (click)="saveProduct()">
+        <ion-icon slot="start" name="save-outline"></ion-icon>
         Guardar
       </ion-button>
     </div>
 
-    <ion-button  expand="block" color="danger" (click)="this.fbs.destroyItem(product.name)">
+    <ion-button id="btndelete" expand="block" color="danger" (click)="this.fbs.destroyItem(product.name)">
       <ion-icon slot="start" name="trash-outline"></ion-icon>
       Borrar
     </ion-button>

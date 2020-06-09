@@ -5,10 +5,11 @@
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
 
-    <ion-button class="ion-activatable ripple-parent ellipsis" slot="end" fill="clear" (click)="popover($event)">
-      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
-    </ion-button>
+      <ion-button class="ion-activatable ripple-parent ellipsis" slot="end" fill="clear" (click)="popover($event)" *ngIf="folder == 'Inicio' && this.fbs.email !== undefined">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+      </ion-button>
+
   </ion-toolbar>
 </ion-header>
 
@@ -39,8 +40,13 @@
     <app-saved></app-saved>
   </div>
 
+  <div *ngIf="folder == 'Ajustes' && this.fbs.email !== undefined">
+    <app-settings></app-settings>
+  </div>
+
 </ion-content>
 
+<!-- Footer con el precio total -->
 <div *ngIf="folder == 'Inicio' && this.fbs.email !== undefined && this.fbs.userCart.length !== 0">
 
   <ion-footer class="footer">

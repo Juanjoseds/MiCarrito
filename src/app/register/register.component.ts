@@ -35,14 +35,21 @@ export class RegisterComponent implements OnInit {
     const password1 = (document.getElementById('password1') as HTMLInputElement).value.trim();
     const password2 = (document.getElementById('password2') as HTMLInputElement).value.trim();
 
-    if(password1.length !== 0 && password2.length !== 0) {
-        if (password1 === password2) {
-          document.getElementsByClassName('passwordsucess')[0].classList.remove('ocultar');
-          this.regEnabled = email.length !== 0;
-        }else {
-          document.getElementsByClassName('passwordsucess')[0].classList.add('ocultar');
+    if(password1.length !== 0 && password2.length !== 0 && email.length !== 0) {
+      const regexp: RegExp = /^[A-z]+@[A-z]+[.][A-z]+/;
+      if(!regexp.test(email)){
+        document.getElementsByClassName('passwordsucess')[0].classList.remove('ocultar');
+        document.getElementsByClassName('passwordsucess')[1].classList.add('ocultar');
+      }else{
+        document.getElementsByClassName('passwordsucess')[0].classList.add('ocultar');
+        if(password1 === password2){
+          document.getElementsByClassName('passwordsucess')[1].classList.remove('ocultar');
+          this.regEnabled = true;
+        }else{
+          document.getElementsByClassName('passwordsucess')[1].classList.add('ocultar');
           this.regEnabled = false;
         }
+      }
     }
   }
 }

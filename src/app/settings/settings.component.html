@@ -1,0 +1,5 @@
+<ion-item>
+  <ion-label>Modo noche</ion-label>
+  <ion-icon slot="start" name="moon-outline"></ion-icon>
+  <ion-toggle slot="end" [checked]="ls.getNightMode()" (ionChange)="nightmode($event.target.checked)"></ion-toggle>
+</ion-item>

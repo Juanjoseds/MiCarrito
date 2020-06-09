@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {FirebaseService} from './services/firebase.service';
+import {SettingsComponent} from './settings/settings.component';
 
 @Component({
   selector: 'app-root',
@@ -27,12 +28,12 @@ export class AppComponent implements OnInit {
     {
       title: 'Guardados',
       url: 'saved',
-      icon: 'save'
+      icon: 'bookmark'
     },
     {
-      title: 'Favorites',
-      url: 'Favorites',
-      icon: 'heart'
+      title: 'Ajustes',
+      url: 'settings',
+      icon: 'cog'
     }
   ];
   // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public fbs: FirebaseService,
+    public settings: SettingsComponent
   ) {
     this.initializeApp();
   }
@@ -53,6 +55,7 @@ export class AppComponent implements OnInit {
       this.statusBar.backgroundColorByName('white');
       this.splashScreen.hide();
     });
+
   }
 
   ngOnInit() {
@@ -60,5 +63,6 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+    this.settings.changeNightMode();
   }
 }

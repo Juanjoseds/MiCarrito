@@ -17,7 +17,7 @@ import {LocalstorageService} from './localstorage.service';
 export class FirebaseService implements OnInit{
 
     public login; public email; public userItems; public userCart = []; public cartPrice;
-    private checkall; public comprado = []; public supermarket = [];
+    private checkall; public comprado = []; public supermarket = []; public items;
 
     private userDoc$ : Observable<any>;
 
@@ -45,7 +45,7 @@ export class FirebaseService implements OnInit{
                     this.ls.initializeLocalStorage(); // Inicializa las variables de ls
                     this.userDoc$ = this.getUserItems();
                     // Observable de los items del usuario
-                    this.userDoc$.subscribe((doc) => {
+                    this.items = this.userDoc$.subscribe((doc) => {
                         this.userItems = doc;
                         console.log('UserItems:Observable',this.userItems);
                         this.getArrays(); // Obtiene el array alfabeticamente
@@ -76,11 +76,12 @@ export class FirebaseService implements OnInit{
      * Desconecta al usuario actual
      */
     public logout(){
+        this.email = undefined;
         auth().signOut().then(() =>
             console.log('Logout sucessfully')
         ).catch((error) =>
             console.log('Error in logout', error));
-        this.email = undefined;
+        this.items.unsubscribe();
     }
 
     /**
@@ -193,20 +194,21 @@ export class FirebaseService implements OnInit{
      * @param password - Contraseña
      */
     public createUser(email:string, password:string){
-        // console.log('Creando con:' + email + ' ' + password);
+        console.log('Creando con:' + email + ' ' + password);
         this.afs.collection('User').doc(email).ref.get().then(async (doc) => {
             if(doc.exists){
                 console.log('¡El usuario ya existe!');
-            }else{
-                this.afs.collection('User').doc(email).set({}).then(() => {
+            }else {
+                /*this.afs.collection('User').doc(email).set({}).then(() => {
                     const newProduct = {name: '¡Tu primer producto!', price: '0', cart: true, supermarket: 'Ninguno', bought: false};
                     this.afs.collection('User').doc(email).collection('items').doc(newProduct.name).set({
                         [newProduct.name]: newProduct
                     })
 
-                    firebase.auth().createUserWithEmailAndPassword(email,password).catch((error) => {
-                        console.log('Error', error);
-                    })
+
+                });*/
+                firebase.auth().createUserWithEmailAndPassword(email,password).catch((error) => {
+                    console.log('Error', error);
                 });
                 await this.router.navigateByUrl('/Inicio');
             }

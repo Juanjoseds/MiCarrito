@@ -13,6 +13,7 @@ import {RegisterComponent} from '../register/register.component';
 import {EditComponent} from '../edit/edit.component';
 import {PopoverComponent} from '../popover/popover.component';
 import {SavedComponent} from '../saved/saved.component';
+import {SettingsComponent} from '../settings/settings.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {SavedComponent} from '../saved/saved.component';
     IonicModule,
     FolderPageRoutingModule,
   ],
-    declarations: [FolderPage, HomeComponent, AuthComponent, RegisterComponent, EditComponent, PopoverComponent, SavedComponent]
+    declarations: [FolderPage, HomeComponent, AuthComponent, RegisterComponent,
+      EditComponent, PopoverComponent, SavedComponent, SettingsComponent]
 })
 export class FolderPageModule {}

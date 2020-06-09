@@ -5,6 +5,7 @@ import { FolderPage } from './folder.page';
 import {RegisterComponent} from '../register/register.component';
 import {EditComponent} from '../edit/edit.component';
 import {SavedComponent} from '../saved/saved.component';
+import {SettingsComponent} from '../settings/settings.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: '/saved',
     component: SavedComponent
+  },
+  {
+    path: '/settings',
+    component: SettingsComponent
   }
 ];
 

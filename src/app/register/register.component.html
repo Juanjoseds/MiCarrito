@@ -4,14 +4,13 @@
     <p>¿Nos presentamos?</p>
     <small class="form-text text-muted">Sus datos no se compartirán con nadie</small>
   </div>
-  <!-- Se necesita encriptar para ser legal
-  <div class="form-group mt-4">
-    <label for="nombre">Nombre</label>
-    <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Escriba su correo">
-  </div> -->
   <div class="form-group mt-4">
     <label for="email">Correo electrónico</label>
     <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Escriba su correo" (input)="enableButton()">
+    <div class="passwordsucess ocultar mt-1">
+      <div><ion-icon name="close-circle-outline" class="sucessicon text-muted"></ion-icon></div>
+      <div><p class="m-0 text-muted">&nbsp;El correo parece no estar bien escrito</p></div>
+    </div>
   </div>
   <div class="form-group">
     <label for="password1">Contraseña</label>

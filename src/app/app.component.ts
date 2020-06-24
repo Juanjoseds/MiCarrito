@@ -4,6 +4,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {FirebaseService} from './services/firebase.service';
 import {SettingsComponent} from './settings/settings.component';
+import {LocalstorageService} from './services/localstorage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -43,7 +45,9 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public fbs: FirebaseService,
-    public settings: SettingsComponent
+    public settings: SettingsComponent,
+    public ls: LocalstorageService,
+    public router: Router
   ) {
     this.initializeApp();
   }
@@ -55,7 +59,6 @@ export class AppComponent implements OnInit {
       this.statusBar.backgroundColorByName('white');
       this.splashScreen.hide();
     });
-
   }
 
   ngOnInit() {

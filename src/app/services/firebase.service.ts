@@ -75,13 +75,15 @@ export class FirebaseService implements OnInit{
     /**
      * Desconecta al usuario actual
      */
-    public logout(){
+    public async logout(){
         this.email = undefined;
         auth().signOut().then(() =>
             console.log('Logout sucessfully')
         ).catch((error) =>
             console.log('Error in logout', error));
         this.items.unsubscribe();
+
+        await this.router.navigateByUrl('/');
     }
 
     /**

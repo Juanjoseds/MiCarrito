@@ -64,4 +64,8 @@ export class LocalstorageService {
     public updateVariable(name:string, content:any){
         localStorage.setItem(name, content);
     }
+
+    public getVariable(name:string){
+        return localStorage.getItem(name);
+    }
 }

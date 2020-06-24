@@ -11,10 +11,11 @@ import { AppRoutingModule } from './app-routing.module';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment.prod';
+import {SlidesComponent} from './slides/slides.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+    declarations: [AppComponent, SlidesComponent],
   entryComponents: [],
   imports: [
       BrowserModule,

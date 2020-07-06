@@ -54,10 +54,18 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Texto oscuro para fondo blanco
-      this.statusBar.styleDefault();
-      this.statusBar.backgroundColorByName('white');
-      this.splashScreen.hide();
+      // Configuramos la barra de estado según el modo noche
+      if(this.ls.getNightMode() === false){
+        // Texto oscuro para fondo blanco
+        this.statusBar.styleDefault();
+        this.statusBar.backgroundColorByName('white');
+        this.splashScreen.hide();
+      }else{
+        this.statusBar.styleLightContent();
+        this.statusBar.backgroundColorByHexString('#121212');
+        this.splashScreen.hide();
+      }
+
     });
   }
 

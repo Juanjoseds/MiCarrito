@@ -38,13 +38,14 @@ export class LocalstorageService {
 
     /**
      * Devuelve el valor de NightMode
+     * @return boolean
      */
     public getNightMode(){
-        const nm = localStorage.getItem('nightMode');
-        if(nm === null){
+        const nm = JSON.parse(localStorage.getItem('nightMode'));
+        if(nm === null || nm === false){
             return false;
         }else{
-            return nm;
+            return true;
         }
     }
 
